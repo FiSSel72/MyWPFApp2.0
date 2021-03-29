@@ -34,5 +34,11 @@ namespace MyWPFApp
         {
             System.Windows.Application.Current.Shutdown(-1);
         }
+
+        private void PasswordToTag(object sender, RoutedEventArgs e)
+        {
+            PasswordBox passwordBox = (PasswordBox)sender;
+            passwordBox.Tag = passwordBox.Password;
+        }
     }
 }

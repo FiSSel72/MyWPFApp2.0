@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,7 +19,7 @@ namespace MyWPFApp
         #endregion
 
         #region Commands
-        public ICommand LoginCommand => _loginCommand ?? (_loginCommand = new RelayCommand(arg => Signin()));
+        public ICommand LoginCommand => _loginCommand ?? (_loginCommand = new RelayCommand(arg => SigninAsync()));
         #endregion
 
         #region Properties
@@ -42,9 +44,9 @@ namespace MyWPFApp
         #endregion
 
         #region Private Methods
-        private void Signin()
+        private void SigninAsync()
         {
-            MessageBox.Show(LoginStroke,PasswordStroke);
+            HttpMethods.Posting(LoginStroke,PasswordStroke);
         }
         #endregion
 

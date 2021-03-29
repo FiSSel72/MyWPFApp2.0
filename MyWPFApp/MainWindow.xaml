@@ -74,7 +74,7 @@
 
 
                 <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                    <TextBox FontFamily="Helvetica"
+                    <PasswordBox FontFamily="Helvetica"
                              FontWeight="Light"
                              FontSize="20"
                              HorizontalAlignment="Center"
@@ -86,7 +86,8 @@
                              Opacity="0.5"
                              Height="25"
                              Margin="63,0,0,0"
-                             Text="{Binding Path=PasswordStroke, Mode=TwoWay}"
+                                 PasswordChanged="PasswordToTag" 
+                             Tag="{Binding Path=PasswordStroke, Mode=OneWayToSource}"
                              />
                     <iconPacks:PackIconMaterial Kind="Lock" 
                                                 VerticalAlignment="Center" 

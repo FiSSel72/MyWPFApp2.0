@@ -1,0 +1,180 @@
+﻿<Window x:Class="MyWPFApp.InfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyWPFApp" xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        mc:Ignorable="d"
+       Height="400" Width="800"
+        AllowsTransparency="True" Background="Transparent"
+        WindowStyle="None" ResizeMode="NoResize"
+        MouseDown="Window_MouseDown"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="SimpleMainButtonTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Storyboard x:Key="CloseMenu">
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
+                    <EasingDoubleKeyFrame KeyTime="0" Value="180"/>
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+                </DoubleAnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridBackground">
+                    <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+            <Storyboard x:Key="OpenMenu">
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
+                    <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="180"/>
+                </DoubleAnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridBackground">
+                    <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonClose">
+            <BeginStoryboard x:Name="CloseMenu_BeginStoryboard" Storyboard="{StaticResource CloseMenu}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpen">
+            <BeginStoryboard Storyboard="{StaticResource OpenMenu}"/>
+        </EventTrigger>
+    </Window.Triggers>
+    <Grid>
+        <Grid Background="#33363d">
+            <Rectangle Width="800" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Rectangle.Fill>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#FF06AA06" Offset="0.0"/>
+                        <GradientStop Color="#99ff66" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Grid x:Name="GridBackground" Background="#80020202" Opacity="0"/>
+            <Button x:Name="ButtonOpen"
+                    Width="30" Height="30" 
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Content="{iconPacks:Material Kind=Menu}"
+                    FontSize="20"
+                    />
+            <Grid x:Name="GridMenu" Width="180" HorizontalAlignment="Left" Margin="-180,0,0,0" Background="#33363d" Panel.ZIndex="2">
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Grid.RenderTransform>
+                <StackPanel>
+                    <StackPanel Height="110">
+                        <Ellipse Width="70"
+                                 Height="70"
+                                 HorizontalAlignment="Left"
+                                 >
+                            <Ellipse.Fill>
+                                <ImageBrush>
+                                    <ImageBrush.ImageSource>
+                                        <BitmapImage UriSource="Assets/no profile.png"/>
+                                    </ImageBrush.ImageSource>
+                                </ImageBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <TextBlock Text="Артём Головченко"       
+                        Height="20"
+                                   TextAlignment="Left"
+                                   FontFamily="Helvetica"
+                                   FontWeight="Light"
+                                   FontSize="14"
+                                   Foreground="White"/>
+                        <!--В текстблоке добавить привязку к ФИО и логину соответственно-->
+                        <TextBlock Text="fissel72"
+                                   Height="20"
+                                   TextAlignment="Left"
+                                   FontFamily="Helvetica"
+                                   FontWeight="Light"
+                                   FontSize="14"
+                                   Foreground="White"/>
+                    </StackPanel>
+                    <ListBox Foreground="White" FontFamily="Helvetica" FontWeight="Light" FontSize="18" Background="Transparent" BorderBrush="Transparent">
+                        <ListBoxItem Height="45" Padding="0" >
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <iconPacks:PackIconMaterial Kind="File" 
+                                        VerticalAlignment="Center"  
+                                        Foreground="White"
+                                        Width="20" Height="20"
+                                        Margin="0,0,5,0"/>
+                                <TextBlock Text="Reports" 
+                                       VerticalAlignment="Center"
+                                           Height="20"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem Height="45" Padding="0">
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <iconPacks:PackIconMaterial Kind="Cog" 
+                                        VerticalAlignment="Center"  
+                                        Foreground="White"
+                                        Width="20" Height="20"
+                                        Margin="0,0,5,0"/>
+                                <TextBlock Text="Settings" 
+                                       VerticalAlignment="Center"
+                                           Height="20"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem Height="45" Padding="0">
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <iconPacks:PackIconMaterial Kind="Database" 
+                                        VerticalAlignment="Center"  
+                                        Foreground="White"
+                                        Width="20" Height="20"
+                                        Margin="0,0,5,0"/>
+                                <TextBlock Text="Local DB" 
+                                       VerticalAlignment="Center"
+                                           Height="20"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                    </ListBox>
+                </StackPanel>
+                <Button x:Name="ButtonClose" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Top" 
+                        Width="30" 
+                        Height="30" 
+                        Padding="0"
+                        Content="{iconPacks:Material Kind=Close}"/>
+                <Button 
+                        Height="40"
+                        VerticalAlignment="Bottom"
+                        Content="SIGN OUT"
+                        VerticalContentAlignment="Center"
+                        FontSize="18"/>
+            </Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="30" VerticalAlignment="Top">
+                <Button Width="30" Height="30"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"
+                        Content="{iconPacks:Material Kind=WindowMinimize}"
+                        FontSize="20"
+                        Click="Minimize"/>
+                <Button Width="30" Height="30" 
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"
+                        Content="{iconPacks:Material Kind=WindowClose}"
+                        FontSize="20"
+                        Click="Close"
+                        />
+            </StackPanel>
+            <DataGrid Margin="0 30 0 0" Background="Transparent" Panel.ZIndex="1" IsReadOnly="True" AutoGenerateColumns="False">
+
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>

@@ -10,6 +10,9 @@
         WindowStyle="None" ResizeMode="NoResize"
         MouseDown="Window_MouseDown"
         WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <local:ViewModel/>
+    </Window.DataContext>
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

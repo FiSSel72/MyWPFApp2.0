@@ -44,7 +44,7 @@ namespace MyWPFApp
         #region Private Methods
         private void Signin()
         {
-            MessageBox.Show("aaa");
+            MessageBox.Show(LoginStroke,PasswordStroke);
         }
         #endregion
 

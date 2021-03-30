@@ -13,7 +13,7 @@ namespace MyWPFApp
 {
     public class HttpMethods
     {
-        public void Posting(string log, string pass)
+        public bool CheckIfCorrect(string log, string pass)
         {
             var client = new RestClient(" http://bmhmh.ho.ua");
             var request = new RestRequest("/index.php/api/login", Method.POST);
@@ -27,12 +27,28 @@ namespace MyWPFApp
 
             IRestResponse response = client.Execute(request);
             var content = response.Content;
+
             if (content == "[\"Wrong login" + @"\" + "/password\"]")
-                {
-                    MessageBox.Show("Check it and try again", "Wrong login or password");
-                }
-                else MessageBox.Show(content);
-                
+            { 
+                return false;
+            }
+            else return true;
+        }
+        public string Posting(string log, string pass)
+        {
+            var client = new RestClient(" http://bmhmh.ho.ua");
+            var request = new RestRequest("/index.php/api/login", Method.POST);
+
+            request.AddJsonBody(JsonConvert.SerializeObject(
+                   new
+                   {
+                       login = log,
+                       password = pass
+                   }));
+
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+                return content;
             
         }
         

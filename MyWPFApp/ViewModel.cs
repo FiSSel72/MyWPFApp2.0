@@ -18,6 +18,7 @@ namespace MyWPFApp
         private TypeUserControl _windowType;
         public string _login;
         public string _password;
+        public string _data;
         #endregion
 
         #region Commands
@@ -59,9 +60,16 @@ namespace MyWPFApp
         private void SigninAsync()
         {
             HttpMethods a = new HttpMethods();
-            a.Posting(LoginStroke, PasswordStroke);
 
-
+            if (a.CheckIfCorrect(LoginStroke, PasswordStroke) == false)
+            {
+                MessageBox.Show("Check it and try again", "Wrong login or password");
+            }
+            else
+            {
+                _data = a.Posting(LoginStroke, PasswordStroke);
+                SwitchWindow();
+            }
         }
         private void SwitchWindow()
         {

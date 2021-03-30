@@ -10,28 +10,25 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MyWPFApp
+namespace MyWPFApp.PageAssets
 {
     /// <summary>
-    /// Логика взаимодействия для InfoWindow.xaml
+    /// Логика взаимодействия для UserControl2.xaml
     /// </summary>
-    public partial class InfoWindow : Window
+    public partial class UserControl2 : UserControl
     {
-        public InfoWindow()
+        public UserControl2()
         {
             InitializeComponent();
-        }
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-                DragMove();
         }
 
         private void Minimize(object sender, RoutedEventArgs e)
         {
-            WindowState = WindowState.Minimized;
+            Window window = Window.GetWindow(this);
+            window.WindowState = WindowState.Minimized;     
         }
 
         private void Close(object sender, RoutedEventArgs e)

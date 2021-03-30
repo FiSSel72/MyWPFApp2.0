@@ -9,9 +9,10 @@ using System.Windows;
 
 namespace MyWPFApp
 {
+   
     class HttpMethods
     {
-        public static async Task Posting(string log, string pass)
+        public async void Posting(string log, string pass)
         {
              using (var client = new HttpClient())
             {   
@@ -24,9 +25,12 @@ namespace MyWPFApp
                 var data = new StringContent(user, Encoding.UTF8, "application/json");
                 var url = "http://bmhmh.ho.ua/index.php/api/login";
 
-                var response = await client.PostAsync(url, data);
-                string result = response.Content.ReadAsStringAsync().Result;
-                MessageBox.Show(result);
+                HttpResponseMessage response = await client.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+
+                var resp = await client.PostAsync(url, data);
+                string contents = resp.Content.ReadAsStringAsync().Result;
+                MessageBox.Show(contents);
             }
         }
     }

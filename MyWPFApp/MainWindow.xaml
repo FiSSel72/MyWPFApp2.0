@@ -3,118 +3,36 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MyWPFApp" xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:local="clr-namespace:MyWPFApp" xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:controls="clr-namespace:MyWPFApp.PageAssets"
         mc:Ignorable="d"
-       Title="MainWindow" Height="400" Width="380"
+       Title="MainWindow" Height="400" Width="800"
         AllowsTransparency="True" Background="Transparent"
         WindowStyle="None" ResizeMode="NoResize"
         MouseDown="Window_MouseDown"
         WindowStartupLocation="CenterScreen">
+    
     <Window.DataContext>
         <local:ViewModel/>
     </Window.DataContext>
     <Window.Resources>
-        <ResourceDictionary>
+        <local:EqualsToVisibleConverter x:Key="EqualsToVisibleConverter"/>
+        <ResourceDictionary x:Key="res">
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="ModernButtonTheme.xaml"/>
+                <ResourceDictionary x:Name="FirstView" Source="/SimpleMainButtonTheme.xaml"/>
+                <ResourceDictionary x:Name="SecondView" Source="/ModernButtonTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            
         </ResourceDictionary>
     </Window.Resources>
+
     <Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="169*"/>
-                <RowDefinition Height="231*"/>
-            </Grid.RowDefinitions>
+        <Grid Visibility="{Binding WindowType, Converter={StaticResource EqualsToVisibleConverter}, ConverterParameter={x:Static local:TypeUserControl.First}}">
+            <controls:UserControl1/>
+        </Grid>
 
-            <Border CornerRadius="10" Grid.RowSpan="2">
-                <Border.Background>
-                    <LinearGradientBrush>
-                        <GradientStop Color="#FF06AA06" Offset="0.0"/>
-                        <GradientStop Color="#99ff66" Offset="1"/>
-                    </LinearGradientBrush>
-                </Border.Background>
-            </Border>
-
-            <StackPanel VerticalAlignment="Center" Height="42" Margin="0,66,0,61">
-                <TextBlock Text="SIGN IN"
-                           FontWeight="Light"
-                           FontFamily="helvetica"
-                           FontSize="35"
-                           Foreground="White"
-                           HorizontalAlignment="Center"/>
-            </StackPanel>
-
-            <StackPanel Grid.Row="1" >
-                <StackPanel Orientation="Horizontal">
-                    <TextBox FontFamily="Helvetica"
-                             FontWeight="Light"
-                             FontSize="20"
-                             HorizontalAlignment="Center"
-                             Foreground="White"
-                             Background="Transparent"
-                             BorderThickness="0"
-                             Width="235"
-                             HorizontalContentAlignment="Left"
-                             Opacity="0.5"
-                             Height="25"
-                             Margin="63,0,0,0"
-                             Text="{Binding Path=LoginStroke, Mode=TwoWay}"
-                             />
-                    <iconPacks:PackIconMaterial Kind="Account" 
-                                                VerticalAlignment="Center" 
-                                                HorizontalAlignment="Center" 
-                                                Foreground="White"/>
-                </StackPanel>
-                <Border Width="250"
-                        Height="2"
-                        Background="White"
-                        Opacity="0.5"/>
-
-
-
-                <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                    <PasswordBox FontFamily="Helvetica"
-                             FontWeight="Light"
-                             FontSize="20"
-                             HorizontalAlignment="Center"
-                             Foreground="White"
-                             Background="Transparent"
-                             BorderThickness="0"
-                             Width="235"
-                             HorizontalContentAlignment="Left"
-                             Opacity="0.5"
-                             Height="25"
-                             Margin="63,0,0,0"
-                                 PasswordChanged="PasswordToTag" 
-                             Tag="{Binding Path=PasswordStroke, Mode=OneWayToSource}"
-                             />
-                    <iconPacks:PackIconMaterial Kind="Lock" 
-                                                VerticalAlignment="Center" 
-                                                HorizontalAlignment="Center" 
-                                                Foreground="White"/>
-                </StackPanel>
-                <Border Width="250"
-                        Height="2"
-                        Background="White"
-                        Opacity="0.5"/>
-
-
-                <StackPanel Orientation="Horizontal" Margin="0,50,0,0">
-                    <Button Width="100" Height="40" 
-                            Content="LOGIN" 
-                            Margin="60,0,60,0"
-                            FontSize="18" 
-                            Command="{Binding LoginCommand}"/>
-                    <Button Width="100" Height="40" 
-                            Content="CANCEL"
-                            FontSize="18"
-                            Click="Close"/>
-                </StackPanel>
-
-            </StackPanel>
-
-
+        <Grid Visibility="{Binding WindowType, Converter={StaticResource EqualsToVisibleConverter}, ConverterParameter={x:Static local:TypeUserControl.Second}}">
+            <controls:UserControl2/>
         </Grid>
     </Grid>
+
 </Window>

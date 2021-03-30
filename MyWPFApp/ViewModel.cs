@@ -14,12 +14,17 @@ namespace MyWPFApp
     {
         #region Fields
         private ICommand _loginCommand;
+        private ICommand _switchWindowCommand;
+        private TypeUserControl _windowType;
         private string _login;
         private string _password;
+        private Task<string> _data;
+        private string _data2;
         #endregion
 
         #region Commands
         public ICommand LoginCommand => _loginCommand ?? (_loginCommand = new RelayCommand(arg => SigninAsync()));
+        public ICommand SwitchWindowCommand => _switchWindowCommand ?? (_switchWindowCommand ?? (_switchWindowCommand = new RelayCommand(arg => SwitchWindow())));
         #endregion
 
         #region Properties
@@ -41,12 +46,30 @@ namespace MyWPFApp
                 OnPropertyChanged(nameof(PasswordStroke));
             }
         }
+        public TypeUserControl WindowType
+        {
+            get => _windowType;
+            set
+            {
+                _windowType = value;
+                OnPropertyChanged(nameof(WindowType));
+            }
+        }
         #endregion
 
         #region Private Methods
         private void SigninAsync()
         {
-            HttpMethods.Posting(LoginStroke,PasswordStroke);
+            HttpMethods a = new HttpMethods();
+            a.Posting(LoginStroke,PasswordStroke);
+
+        }
+        private void SwitchWindow()
+        {
+            if (WindowType == TypeUserControl.Second)
+                WindowType = TypeUserControl.First;
+            else
+                ++WindowType;
         }
         #endregion
 

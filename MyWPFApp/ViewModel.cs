@@ -16,8 +16,8 @@ namespace MyWPFApp
         private ICommand _loginCommand;
         private ICommand _switchWindowCommand;
         private TypeUserControl _windowType;
-        private string _login;
-        private string _password;
+        public string _login;
+        public string _password;
         #endregion
 
         #region Commands
@@ -32,7 +32,7 @@ namespace MyWPFApp
             set
             {
                 _login = value;
-                OnPropertyChanged(nameof(LoginStroke));
+                OnPropertyChanged("LoginStroke");
             }
         }
         public string PasswordStroke
@@ -41,7 +41,7 @@ namespace MyWPFApp
             set
             {
                 _password = value;
-                OnPropertyChanged(nameof(PasswordStroke));
+                OnPropertyChanged("PasswordStroke");
             }
         }
         public TypeUserControl WindowType

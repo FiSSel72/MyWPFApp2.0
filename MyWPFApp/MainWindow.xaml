@@ -26,6 +26,16 @@
         <Grid Visibility="{Binding WindowType, Converter={StaticResource EqualsToVisibleConverter}, ConverterParameter={x:Static local:TypeUserControl.Second}}">
             <controls:UserControl2/>
         </Grid>
+        <TextBox
+            Height="30"
+            Width="200"
+            Text="{Binding LoginStroke, Mode=TwoWay}"
+            />
+        <TextBlock
+            Height="30"
+            Width="200"
+            Margin="0 250 0 0"
+            Text="{Binding LoginStroke,Mode=TwoWay}"/>
         <Button VerticalAlignment="Bottom" Command="{Binding SwitchWindowCommand}" Content="Switch user control"/>
     </Grid>
 

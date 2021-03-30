@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,31 +13,26 @@ namespace MyWPFApp
 {
     public class HttpMethods
     {
-        public async void Posting(string log, string pass)
+        public void Posting(string log, string pass)
         {
-             using (var client = new HttpClient())
-            {   
-                string user = JsonConvert.SerializeObject(
+            var client = new RestClient(" http://bmhmh.ho.ua");
+            var request = new RestRequest("/index.php/api/login", Method.POST);
+
+            request.AddJsonBody(JsonConvert.SerializeObject(
                    new
                    {
                        login = log,
                        password = pass
-                   });
-                var data = new StringContent(user, Encoding.UTF8, "application/json");
-                var url = "http://bmhmh.ho.ua/index.php/api/login";
+                   }));
 
-                HttpResponseMessage response = await client.PostAsync(url,data);
-                response.EnsureSuccessStatusCode();
-
-                var contents = await response.Content.ReadAsStringAsync();
-                if (contents == "[\"Wrong login" + @"\" + "/password\"]")
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+            if (content == "[\"Wrong login" + @"\" + "/password\"]")
                 {
                     MessageBox.Show("Check it and try again", "Wrong login or password");
                 }
-                else MessageBox.Show(log, pass);
+                else MessageBox.Show(content);
                 
-
-            }
             
         }
         

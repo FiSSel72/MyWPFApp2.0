@@ -128,7 +128,7 @@
                             </Ellipse.Fill>
                         </Ellipse>
                         <!--В текстблоке добавить привязкe к логину-->
-                        <TextBlock Text=" "
+                        <TextBlock Text="{Binding Path=LoginStroke}"
                                    Height="40"
                                    TextAlignment="Left"
                                    FontFamily="Helvetica"

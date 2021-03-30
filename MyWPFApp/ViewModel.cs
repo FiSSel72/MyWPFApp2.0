@@ -18,8 +18,6 @@ namespace MyWPFApp
         private TypeUserControl _windowType;
         private string _login;
         private string _password;
-        private Task<string> _data;
-        private string _data2;
         #endregion
 
         #region Commands
@@ -48,7 +46,7 @@ namespace MyWPFApp
         }
         public TypeUserControl WindowType
         {
-            get => _windowType;
+            get { return _windowType; }
             set
             {
                 _windowType = value;
@@ -61,7 +59,8 @@ namespace MyWPFApp
         private void SigninAsync()
         {
             HttpMethods a = new HttpMethods();
-            a.Posting(LoginStroke,PasswordStroke);
+            a.Posting(LoginStroke, PasswordStroke);
+
 
         }
         private void SwitchWindow()

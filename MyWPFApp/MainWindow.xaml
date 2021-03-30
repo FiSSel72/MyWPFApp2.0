@@ -16,13 +16,6 @@
     </Window.DataContext>
     <Window.Resources>
         <local:EqualsToVisibleConverter x:Key="EqualsToVisibleConverter"/>
-        <ResourceDictionary x:Key="res">
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary x:Name="FirstView" Source="/SimpleMainButtonTheme.xaml"/>
-                <ResourceDictionary x:Name="SecondView" Source="/ModernButtonTheme.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-            
-        </ResourceDictionary>
     </Window.Resources>
 
     <Grid>
@@ -33,6 +26,7 @@
         <Grid Visibility="{Binding WindowType, Converter={StaticResource EqualsToVisibleConverter}, ConverterParameter={x:Static local:TypeUserControl.Second}}">
             <controls:UserControl2/>
         </Grid>
+        <Button VerticalAlignment="Bottom" Command="{Binding SwitchWindowCommand}" Content="Switch user control"/>
     </Grid>
 
 </Window>

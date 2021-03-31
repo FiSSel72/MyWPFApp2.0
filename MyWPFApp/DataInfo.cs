@@ -8,49 +8,36 @@ namespace MyWPFApp
 {
     public class DataInfo
     {
-        string date;
-        string time;
-        string phone;
-        string userEvent;
-        string name;
-
         public string Date
         {
-            get { return date; }
-            set { date = value; }
+            get;
+            set;
         }
 
         public string Time
         {
-            get { return time; }
-            set { time = value; }
+            get;
+            set;
         }
 
         public string Phone
         {
-            get { return phone; }
-            set { phone = value; }
+            get;
+            set;
         }
 
-        public string UserEvent
+        public string Event
         {
-            get { return userEvent; }
-            set { userEvent = value; }
+            get;
+            set;
         }
 
         public string Name
         {
-            get { return name; }
-            set { name = value; }
+             get;
+             set;
         }
 
-        public DataInfo(string date, string time, string phone, string userEvent, string name)
-        {
-            this.Date = date;
-            this.Time = time;
-            this.Phone = phone;
-            this.UserEvent = userEvent;
-            this.Name = name;
-        }
+        
     }
 }

@@ -36,47 +36,13 @@ namespace MyWPFApp
         public ObservableCollection<DataInfo> DataContent
         {
             get { return _datacontent; }
-            set { _datacontent = value; }
+            set 
+            { 
+                _datacontent = value;
+                OnPropertyChanged(nameof(DataContent));
+            }
         }
-        public ViewModel()
-        {
-            _datacontent = new ObservableCollection<DataInfo>();
-            this.GenerateData();
-        }
-        public void GenerateData()
-        {
-            _datacontent.Add(new DataInfo("1002", "Khaleesi", "Mexico", "QUEEN", "Mexico D.F."));
-            _datacontent.Add(new DataInfo("1002", "Drogo", "Mexico", "DOTHRAKI", "Mexico D.F."));
-            _datacontent.Add(new DataInfo("1001", "Maria Anders", "Germany", "ALFKI", "Berlin"));
-            _datacontent.Add(new DataInfo("1001", "Antonio Moreno", "Germany", "ANTON", "Berlin"));
-            _datacontent.Add(new DataInfo("1001", "Martin Sommer", "Germany", "BOLID", "Berlin"));
-            _datacontent.Add(new DataInfo("1001", "Sommer", "Germany", "BOL", "Berlin"));
-            _datacontent.Add(new DataInfo("1001", "Jon Snow", "Germany", "BOLD", "Berlin"));
-            _datacontent.Add(new DataInfo("1001", "Arya Stark", "Germany", "NOONE", "Berlin"));
-            _datacontent.Add(new DataInfo("1002", "Ana Trujilo", "Mexico", "ANATR", "Mexico D.F."));
-            _datacontent.Add(new DataInfo("1002", "Styles", "Mexico", "HAHI", "Mexico D.F."));
-            _datacontent.Add(new DataInfo("1002", "Ana Trujilo", "Mexico", "ANATR", "Mexico D.F."));
-            _datacontent.Add(new DataInfo("1002", "Antonio Moreno", "Mexico", "ANTON", "Mexico D.F."));
-            _datacontent.Add(new DataInfo("1002", "Christina Berglund", "Mexico", "ANATR", "Mexico D.F."));
-            _datacontent.Add(new DataInfo("1003", "Antonio Moreno", "Mexico", "ANTON", "Mexico D.F."));
-            _datacontent.Add(new DataInfo("1003", "Ronaldo", "Mexico", "ANTON", "Mexico D.F."));
-            _datacontent.Add(new DataInfo("1003", "Cersei", "Mexico", "ANTON", "Mexico D.F."));
-            _datacontent.Add(new DataInfo("1003", "Jack", "Mexico", "ANTON", "Mexico D.F."));
-            _datacontent.Add(new DataInfo("1003", "Antony", "Mexico", "ANTON", "Mexico D.F."));
-            _datacontent.Add(new DataInfo("1003", "Caesar", "Mexico", "ANTON", "Mexico D.F."));
-            _datacontent.Add(new DataInfo("1003", "Lanister", "Mexico", "ANTON", "Mexico D.F."));
-            _datacontent.Add(new DataInfo("1003", "Sansa", "Mexico", "BLAUS", "Mexico D.F."));
-            _datacontent.Add(new DataInfo("1004", "Thomas Hardy", "UK", "AROUT", "London"));
-            _datacontent.Add(new DataInfo("1005", "Christina Berglund", "Sweden", "BERGS", "Lula"));
-            _datacontent.Add(new DataInfo("1005", "Hanna Moos", "Sweden", "BERGS", "Lula"));
-            _datacontent.Add(new DataInfo("1006", "Hanna Moos", "Germany", "BLAUS", "Mannheim"));
-            _datacontent.Add(new DataInfo("1007", "Frederique Citeaux", "France", "BLONP", "Strasbourg"));
-            _datacontent.Add(new DataInfo("1007", "Martin Sommer", "France", "BOTTM", "Strasbourg"));
-            _datacontent.Add(new DataInfo("1007", "Elizabeth Lincoln", "France", "BLONP", "Strasbourg"));
-            _datacontent.Add(new DataInfo("1008", "Martin Sommer", "Spain", "BOLID", "Madrid"));
-            _datacontent.Add(new DataInfo("1009", "Laurence Lebihan", "France", "BONAP", "Marseille"));
-            _datacontent.Add(new DataInfo("1010", "Elizabeth Lincoln", "Canada", "BOTTM", "Tsawassen"));
-        }
+        
         public string LoginStroke
         {
             get { return _login; }
@@ -135,7 +101,7 @@ namespace MyWPFApp
             }
             else
             {
-                _data = a.Posting(LoginStroke, PasswordStroke);
+                DataContent = JsonConvert.DeserializeObject<ObservableCollection<DataInfo>>(a.Posting(LoginStroke, PasswordStroke));
                 SwitchWindow();
             }
         }
@@ -152,7 +118,7 @@ namespace MyWPFApp
             else
             {
                 HttpMethods c = new HttpMethods();
-                c.PostingChange(LoginStroke, PasswordStroke, NewPasswordStroke);
+                c.PostingChange(LoginStroke,PasswordStroke,NewPasswordStroke);
             }
         }
         private void SwitchWindow()

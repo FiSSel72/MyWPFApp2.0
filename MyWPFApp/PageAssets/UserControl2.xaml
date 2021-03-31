@@ -182,7 +182,8 @@
                                    FontFamily="Helvetica"
                                    FontWeight="Light"
                                    FontSize="28"
-                                   Foreground="White"/>
+                                   Foreground="White"
+                                   Margin=" 10 0 0 0"/>
                     </StackPanel>
                     <ListBox Foreground="White" FontFamily="Helvetica" FontWeight="Light" FontSize="18" Background="Transparent" BorderBrush="Transparent">
                         <ListBoxItem Height="45" Padding="0" HorizontalContentAlignment="Center">
@@ -386,13 +387,17 @@
                         />
             </StackPanel>
             <syncfusion:SfDataGrid Margin="0,30,0,0" 
-                                          ItemsSource="{Binding DataContent}" 
+                                          ItemsSource="{Binding DataContent, Mode=TwoWay}" 
                                           AllowFiltering="True"
-                                          ColumnSizer="AutoWithLastColumnFill" 
+                                          ColumnSizer="Star" 
                                           SelectionMode="Extended" 
                                           FilterRowPosition="FixedTop" 
                                           AllowTriStateSorting="True"
-                                          BorderBrush="Transparent"/>
+                                          BorderBrush="Transparent"
+                                          Foreground="White"
+                                          FontWeight="Light"
+                                          FontFamily="Helvetica"
+                                          />
         </Grid>
     </Grid>
 </UserControl>

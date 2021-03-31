@@ -51,6 +51,23 @@ namespace MyWPFApp
                 return content;
             
         }
-        
+        public void PostingChange(string log, string pass, string pass2)
+        {
+            var client = new RestClient(" http://bmhmh.ho.ua");
+            var request = new RestRequest("/index.php/api/login", Method.POST);
+
+            request.AddJsonBody(JsonConvert.SerializeObject(
+                   new
+                   {
+                       login = log,
+                       password = pass,
+                       password2= pass2
+                   }));
+
+            IRestResponse response = client.Execute(request);
+            MessageBox.Show("Password changed");
+
+        }
+
     }
 }

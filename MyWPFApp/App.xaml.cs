@@ -13,5 +13,9 @@ namespace MyWPFApp
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDIwMTg4QDMxMzkyZTMxMmUzME1JcGhrWlVneTRzM0pRbUtudXRlRHUzR1krM0JTcDg1RXZRaEllK09JV1k9");
+        }
     }
 }

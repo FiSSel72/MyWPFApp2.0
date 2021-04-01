@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Syncfusion.UI.Xaml.Grid;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,19 +24,29 @@ namespace MyWPFApp.PageAssets
     /// </summary>
     public partial class UserControl2 : UserControl
     {
+        UserEventsListContext db;
         public UserControl2()
         {
             InitializeComponent();
+            
         }
 
         private void Minimize(object sender, RoutedEventArgs e)
         {
             Window window = Window.GetWindow(this);
-            window.WindowState = WindowState.Minimized;     
+            window.WindowState = WindowState.Minimized;
         }
 
         private void Close(object sender, RoutedEventArgs e)
         {
+            
+            using (UserEventsListContext db = new UserEventsListContext())
+            {
+                string s=UserLoginBlock.Text;
+                UserEventsList UserEvent = new UserEventsList { User_login = s, Event_id = "1" };
+                db.UserEvents.Add(UserEvent);
+                db.SaveChanges();
+            }
             System.Windows.Application.Current.Shutdown(-1);
         }
 
@@ -40,6 +54,21 @@ namespace MyWPFApp.PageAssets
         {
             PasswordBox passwordBox = (PasswordBox)sender;
             passwordBox.Tag = passwordBox.Password;
+        }
+
+        private void ButtonReports_Click(object sender, RoutedEventArgs e)
+        {
+            HttpMethods a = new HttpMethods();
+            string p = UserLoginBlock.Text;
+            string l = LoginText.Text;
+            InfoGrid.ItemsSource= JsonConvert.DeserializeObject<ObservableCollection<DataInfo>>(a.Posting(p, l));
+        }
+
+        private void ButtonLocalDb_Click(object sender, RoutedEventArgs e)
+        {
+            db = new UserEventsListContext();
+            db.UserEvents.Load();
+            InfoGrid.ItemsSource = db.UserEvents.Local.ToBindingList();
         }
     }
 }

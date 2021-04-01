@@ -18,17 +18,18 @@ namespace MyWPFApp
         private ICommand _switchWindowCommand;
         private ICommand _isEqual;
         private TypeUserControl _windowType;
+        private UserEventsListContext _db;
         private ObservableCollection<DataInfo> _datacontent;
+        private ObservableCollection<UserEventsListContext> _userEventContent;
         public string _login;
         public string _password;
         public string _newPassword;
         public string _isNewPassword;
-        public string _data;
         #endregion
 
         #region Commands
         public ICommand LoginCommand => _loginCommand ?? (_loginCommand = new RelayCommand(arg => SigninAsync()));
-        public ICommand SwitchWindowCommand => _switchWindowCommand ?? (_switchWindowCommand ?? (_switchWindowCommand = new RelayCommand(arg => SwitchWindow())));
+        public ICommand SwitchWindowCommand => _switchWindowCommand ?? (_switchWindowCommand = new RelayCommand(arg => SwitchWindow()));
         public ICommand IsEqualCommand => _isEqual ?? (_isEqual = new RelayCommand(arg => IsEqual()));
         #endregion
 
@@ -42,7 +43,16 @@ namespace MyWPFApp
                 OnPropertyChanged(nameof(DataContent));
             }
         }
-        
+        public ObservableCollection<UserEventsListContext> UserEventContent
+        {
+            get { return _userEventContent; }
+            set
+            {
+                _userEventContent = value;
+                OnPropertyChanged(nameof(UserEventContent));
+            }
+        }
+
         public string LoginStroke
         {
             get { return _login; }
@@ -91,6 +101,33 @@ namespace MyWPFApp
         #endregion
 
         #region Private Methods
+        private void UserEnter()
+        {
+            using(UserEventsListContext db =new UserEventsListContext())
+            {
+                UserEventsList UserEvent = new UserEventsList { User_login = LoginStroke, Event_id="0" };
+                db.UserEvents.Add(UserEvent);
+                db.SaveChanges();
+            }
+        }
+        public void UserExit()
+        {
+            using (UserEventsListContext db = new UserEventsListContext())
+            {
+                UserEventsList UserEvent = new UserEventsList { User_login = LoginStroke, Event_id = "1" };
+                db.UserEvents.Add(UserEvent);
+                db.SaveChanges();
+            }
+        }
+        private void UserChangedPass()
+        {
+            using (UserEventsListContext db = new UserEventsListContext())
+            {
+                UserEventsList UserEvent = new UserEventsList { User_login = LoginStroke, Event_id = "2" };
+                db.UserEvents.Add(UserEvent);
+                db.SaveChanges();
+            }
+        }
         private void SigninAsync()
         {
             HttpMethods a = new HttpMethods();
@@ -119,18 +156,25 @@ namespace MyWPFApp
             {
                 HttpMethods c = new HttpMethods();
                 c.PostingChange(LoginStroke,PasswordStroke,NewPasswordStroke);
+                PasswordStroke = NewPasswordStroke;
+                UserChangedPass();
             }
         }
         private void SwitchWindow()
         {
             if (WindowType == TypeUserControl.Second)
+            {
+                UserEnter();
                 WindowType = TypeUserControl.First;
+                
+            }
             else
+            { 
+                UserExit();
                 ++WindowType;
+                
+            }
         }
-        #endregion
-
-        #region Public Methods
         #endregion
     }
 }

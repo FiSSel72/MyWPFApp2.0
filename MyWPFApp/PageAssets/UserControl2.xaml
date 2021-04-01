@@ -122,6 +122,12 @@
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="SignOut">
             <BeginStoryboard  Storyboard="{StaticResource CloseMenu}"/>
         </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonReports">
+            <BeginStoryboard  Storyboard="{StaticResource CloseMenu}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonLocalDb">
+            <BeginStoryboard  Storyboard="{StaticResource CloseMenu}"/>
+        </EventTrigger>
 
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ShowChangePass">
             <BeginStoryboard Storyboard="{StaticResource ShowPass}"/>
@@ -176,7 +182,8 @@
                             </Ellipse.Fill>
                         </Ellipse>
                         <!--В текстблоке добавить привязкe к логину-->
-                        <TextBlock Text="{Binding Path=LoginStroke}"
+                        <TextBlock x:Name="UserLoginBlock"
+                                   Text="{Binding Path=LoginStroke}"
                                    Height="40"
                                    TextAlignment="Left"
                                    FontFamily="Helvetica"
@@ -185,33 +192,37 @@
                                    Foreground="White"
                                    Margin=" 10 0 0 0"/>
                     </StackPanel>
-                    <ListBox Foreground="White" FontFamily="Helvetica" FontWeight="Light" FontSize="18" Background="Transparent" BorderBrush="Transparent">
-                        <ListBoxItem Height="45" Padding="0" HorizontalContentAlignment="Center">
-                            <StackPanel Orientation="Horizontal" Margin="10">
-                                <iconPacks:PackIconMaterial Kind="File" 
+
+                    <Button x:Name="ButtonReports" Click="ButtonReports_Click">
+                        <StackPanel Orientation="Horizontal" Margin="10">
+                            <iconPacks:PackIconMaterial Kind="File" 
                                         VerticalAlignment="Center"  
                                         Foreground="White"
                                         Width="20" Height="20"
                                         Margin="0,0,5,0"/>
-                                <TextBlock Text="Reports" 
+                            <TextBlock Text="Reports" 
                                        VerticalAlignment="Center"
-                                           Height="20"/>
-                            </StackPanel>
-                        </ListBoxItem>
-                        <ListBoxItem Height="45" Padding="0" HorizontalContentAlignment="Center">
-                            <StackPanel Orientation="Horizontal" Margin="10">
-                                <iconPacks:PackIconMaterial Kind="Database" 
+                                       Height="20"
+                                       FontSize="18"
+                                       FontWeight="Light"
+                                       FontFamily="Helvetica"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="ButtonLocalDb" Click="ButtonLocalDb_Click">
+                        <StackPanel Orientation="Horizontal" Margin="10">
+                            <iconPacks:PackIconMaterial Kind="Database" 
                                         VerticalAlignment="Center"  
                                         Foreground="White"
                                         Width="20" Height="20"
                                         Margin="0,0,5,0"/>
-                                <TextBlock Text="Local DB" 
+                            <TextBlock Text="Local DB" 
                                        VerticalAlignment="Center"
-                                           HorizontalAlignment="Center"
-                                           Height="20"/>
-                            </StackPanel>
-                        </ListBoxItem>
-                    </ListBox>
+                                       Height="20"
+                                       FontSize="18"
+                                       FontWeight="Light"
+                                       FontFamily="Helvetica"/>
+                        </StackPanel>
+                    </Button>
                     <Button x:Name="ButtonSettings">
                         <StackPanel Orientation="Horizontal" Margin="10">
                             <iconPacks:PackIconMaterial Kind="Cog" 
@@ -273,7 +284,7 @@
                                  Background="Transparent"
                                  Text="{Binding LoginStroke}"
                                  Foreground="White"
-                                 IsReadOnly="False"
+                                 IsReadOnly="True"
                                  FontFamily="Helvetica" 
                                  FontWeight="Light" 
                                  FontSize="28"
@@ -289,10 +300,11 @@
                                                 Height="30"
                                                 Width="30"
                                                 Margin="10"/>
-                    <TextBox Height="42"
+                    <TextBox x:Name="LoginText"
+                             Height="42"
                              Width="200"
                              Background="Transparent"
-                             Text="{Binding Path=PasswordStroke}"
+                             Text="{Binding Path=PasswordStroke, Mode=TwoWay}"
                              Foreground="White"
                              FontFamily="Helvetica" 
                              FontWeight="Light" 
@@ -386,8 +398,9 @@
                         Click="Close"
                         />
             </StackPanel>
-            <syncfusion:SfDataGrid Margin="0,30,0,0" 
-                                          ItemsSource="{Binding DataContent, Mode=TwoWay}" 
+            <syncfusion:SfDataGrid x:Name="InfoGrid"
+                                          Margin="5,30,5,5"  
+                                          ItemsSource="{Binding DataContent}"
                                           AllowFiltering="True"
                                           ColumnSizer="Star" 
                                           SelectionMode="Extended" 
@@ -396,8 +409,7 @@
                                           BorderBrush="Transparent"
                                           Foreground="White"
                                           FontWeight="Light"
-                                          FontFamily="Helvetica"
-                                          />
+                                          FontFamily="Helvetica"/>
         </Grid>
     </Grid>
 </UserControl>

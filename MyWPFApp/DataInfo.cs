@@ -8,36 +8,12 @@ namespace MyWPFApp
 {
     public class DataInfo
     {
-        public string Date
-        {
-            get;
-            set;
-        }
+        public string Date {get; set;}
+        public string Time { get; set; }
+        public string Phone { get; set; }
+        public string Event { get; set; }
+        public string Name { get; set; }
 
-        public string Time
-        {
-            get;
-            set;
-        }
 
-        public string Phone
-        {
-            get;
-            set;
-        }
-
-        public string Event
-        {
-            get;
-            set;
-        }
-
-        public string Name
-        {
-             get;
-             set;
-        }
-
-        
     }
 }

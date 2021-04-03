@@ -74,7 +74,7 @@ namespace MyWPFApp
         public void PostingChange(string log, string pass, string pass2)
         {
             var client = new RestClient(" http://bmhmh.ho.ua");
-            var request = new RestRequest("/index.php/api/login", Method.POST);
+            var request = new RestRequest("/index.php/api/NewPassword", Method.POST);
 
             request.AddJsonBody(JsonConvert.SerializeObject(
                    new

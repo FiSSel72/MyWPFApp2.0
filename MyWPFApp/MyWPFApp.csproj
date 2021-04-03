@@ -177,7 +177,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CollectionsList.cs" />
     <Compile Include="DataInfo.cs" />
     <Compile Include="EqualsToVisibleConverter.cs" />
     <Compile Include="HttpMethods.cs" />

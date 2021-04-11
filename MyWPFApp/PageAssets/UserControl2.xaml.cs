@@ -28,7 +28,6 @@ namespace MyWPFApp.PageAssets
         public UserControl2()
         {
             InitializeComponent();
-            
         }
 
         private void Minimize(object sender, RoutedEventArgs e)
@@ -61,7 +60,8 @@ namespace MyWPFApp.PageAssets
             HttpMethods a = new HttpMethods();
             string p = UserLoginBlock.Text;
             string l = LoginText.Text;
-            InfoGrid.ItemsSource= JsonConvert.DeserializeObject<ObservableCollection<DataInfo>>(a.Posting(p, l));
+            a.Posting(p,l);
+            InfoGrid.ItemsSource= JsonConvert.DeserializeObject<ObservableCollection<DataInfo>>(a.GetData());
         }
 
         private void ButtonLocalDb_Click(object sender, RoutedEventArgs e)

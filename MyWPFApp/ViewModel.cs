@@ -18,7 +18,6 @@ namespace MyWPFApp
         private ICommand _switchWindowCommand;
         private ICommand _isEqual;
         private TypeUserControl _windowType;
-        private UserEventsListContext _db;
         private ObservableCollection<DataInfo> _datacontent;
         private ObservableCollection<UserEventsListContext> _userEventContent;
         public string _login;
@@ -131,14 +130,20 @@ namespace MyWPFApp
         private void SigninAsync()
         {
             HttpMethods a = new HttpMethods();
+            var content = a.Posting(LoginStroke, PasswordStroke);
 
-            if (a.CheckIfCorrect(LoginStroke, PasswordStroke) == false)
+            if (content == "No Connection")
+            {
+                MessageBox.Show("No Connection");
+            }
+            else if (content == "Wrong pass")
             {
                 MessageBox.Show("Check it and try again", "Wrong login or password");
             }
             else
             {
-                DataContent = JsonConvert.DeserializeObject<ObservableCollection<DataInfo>>(a.Posting(LoginStroke, PasswordStroke));
+                MessageBox.Show(a.GetData());
+                DataContent = JsonConvert.DeserializeObject<ObservableCollection<DataInfo>>(a.GetData());
                 SwitchWindow();
             }
         }

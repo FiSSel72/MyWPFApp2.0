@@ -58,7 +58,7 @@ namespace MyWPFApp.PageAssets
         private void ButtonReports_Click(object sender, RoutedEventArgs e)
         {
             HttpMethods a = new HttpMethods();
-            InfoGrid.ItemsSource= JsonConvert.DeserializeObject<ObservableCollection<DataInfo>>(a.GetData(TokenController._token.token));
+            InfoGrid.ItemsSource= JsonConvert.DeserializeObject<ObservableCollection<DataInfo>>(a.GetData(TokenController.GetInstance().token));
         }
 
         private void ButtonLocalDb_Click(object sender, RoutedEventArgs e)

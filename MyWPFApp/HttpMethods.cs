@@ -41,7 +41,7 @@ namespace MyWPFApp
                 else
                 {
                     TokenController._token = JsonConvert.DeserializeObject<CurrentToken>(content);
-                    return TokenController._token.token;
+                    return TokenController.GetInstance().token;
                 }
             }
             else

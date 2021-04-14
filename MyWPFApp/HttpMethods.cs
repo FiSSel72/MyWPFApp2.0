@@ -12,10 +12,10 @@ using System.Windows;
 
 namespace MyWPFApp
 {
-   
+
     public class HttpMethods
     {
-        CurrentToken _t;
+        
         public string Posting(string log, string pass)
         {
             var client = new RestClient(" http://bmhmh.ho.ua");
@@ -40,8 +40,8 @@ namespace MyWPFApp
                 }
                 else
                 {
-                    _t = JsonConvert.DeserializeObject<CurrentToken>(content);
-                    return content;
+                    TokenController._token = JsonConvert.DeserializeObject<CurrentToken>(content);
+                    return TokenController._token.token;
                 }
             }
             else
@@ -49,7 +49,7 @@ namespace MyWPFApp
                 return "No Connection";
             }
         }
-        public string GetData()
+        public string GetData(string _t)
         {
             var client = new RestClient(" http://bmhmh.ho.ua");
             var request = new RestRequest("/index.php/api/getRecords", Method.POST);
@@ -57,7 +57,7 @@ namespace MyWPFApp
             request.AddJsonBody(JsonConvert.SerializeObject(
                    new
                    {
-                       token = _t.token
+                       token = _t
                    }));
             IRestResponse response = client.Execute(request);
             var content = response.Content;

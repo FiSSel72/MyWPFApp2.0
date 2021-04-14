@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyWPFApp
 {
-    class CurrentToken
+    public class CurrentToken
     {
         public string token { get; set; }
     }

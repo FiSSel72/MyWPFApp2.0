@@ -67,5 +67,19 @@ namespace MyWPFApp.PageAssets
             db.UserEvents.Load();
             InfoGrid.ItemsSource = db.UserEvents.Local.ToBindingList();
         }
+
+        private void ShowChangePass_Click(object sender, RoutedEventArgs e)
+        {
+            CloseChangePass.IsEnabled = true;
+            ShowChangePass.IsEnabled = false;
+            Newpass.IsEnabled = true;
+        }
+
+        private void CloseChangePass_Click(object sender, RoutedEventArgs e)
+        {
+            ShowChangePass.IsEnabled = true;
+            CloseChangePass.IsEnabled = false;
+            Newpass.IsEnabled = false;
+        }
     }
 }

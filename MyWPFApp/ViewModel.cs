@@ -142,7 +142,6 @@ namespace MyWPFApp
             }
             else
             {
-                MessageBox.Show(content);
                 DataContent = JsonConvert.DeserializeObject<ObservableCollection<DataInfo>>(a.GetData(content));
                 SwitchWindow();
             }

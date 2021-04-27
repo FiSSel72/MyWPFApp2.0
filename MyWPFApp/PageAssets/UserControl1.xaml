@@ -80,7 +80,7 @@
                              Opacity="0.5"
                              Height="25"
                              Margin="63,0,0,0"
-                                 PasswordChanged="PasswordToTag" 
+                             PasswordChanged="PasswordToTag" 
                              Tag="{Binding Path=PasswordStroke, Mode=OneWayToSource}"
                              />
                     <iconPacks:PackIconMaterial Kind="Lock" 

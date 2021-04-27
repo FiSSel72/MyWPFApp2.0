@@ -24,5 +24,11 @@ namespace MyWPFApp.PageAssets
         {
             InitializeComponent();
         }
+
+        private void PasswordToTag(object sender, RoutedEventArgs e)
+        {
+            PasswordBox passwordBox = (PasswordBox)sender;
+            passwordBox.Tag = passwordBox.Password;
+        }
     }
 }

@@ -57,7 +57,7 @@
                              HorizontalContentAlignment="Left"
                              Opacity="0.5"
                              Height="25"
-                             Text="{Binding Path=LoginStroke, Mode=TwoWay}"
+                             Text="{Binding Path=NameStroke, Mode=TwoWay}"
                              />
                     <iconPacks:PackIconMaterial Kind="CardText" 
                                                 VerticalAlignment="Center" 
@@ -89,7 +89,7 @@
                              HorizontalContentAlignment="Left"
                              Opacity="0.5"
                              Height="25"
-                             Text="{Binding Path=LoginStroke, Mode=TwoWay}"
+                             Text="{Binding Path=SurnameStroke, Mode=TwoWay}"
                              />
                     <iconPacks:PackIconMaterial Kind="CardText" 
                                                 VerticalAlignment="Center" 
@@ -119,7 +119,7 @@
                              HorizontalContentAlignment="Left"
                              Opacity="0.5"
                              Height="25"
-                             Text="{Binding Path=LoginStroke, Mode=TwoWay}"
+                             Text="{Binding Path=EmailStroke, Mode=TwoWay}"
                              />
                     <iconPacks:PackIconMaterial Kind="Email" 
                                                 VerticalAlignment="Center" 
@@ -179,6 +179,7 @@
                              HorizontalContentAlignment="Left"
                              Opacity="0.5"
                              Height="25"
+                             PasswordChanged="PasswordToTag"
                              Tag="{Binding Path=PasswordStroke, Mode=OneWayToSource}"
                              />
                     <iconPacks:PackIconMaterial Kind="Key" 
@@ -195,7 +196,8 @@
                     <Button Width="100" Height="40" 
                             Content="SIGN UP" 
                             Margin="60,0,60,0"
-                            FontSize="18"/>
+                            FontSize="18"
+                            Command="{Binding RegisterCommand}"/>
                     <Button Width="100" Height="40" 
                             Content="BACK"
                             FontSize="18"

@@ -15,6 +15,7 @@ namespace MyWPFApp
     {
         #region Fields
         private ICommand _loginCommand;
+        private ICommand _registerCommand;
         private ICommand _switchWindowCommand;
         private ICommand _switchRegisterCommand;
         private ICommand _isEqual;
@@ -23,12 +24,16 @@ namespace MyWPFApp
         private ObservableCollection<UserEventsListContext> _userEventContent;
         public string _login;
         public string _password;
+        public string _email;
+        public string _name;
+        public string _surname;
         public string _newPassword;
         public string _isNewPassword;
         #endregion
 
         #region Commands
         public ICommand LoginCommand => _loginCommand ?? (_loginCommand = new RelayCommand(arg => SigninAsync()));
+        public ICommand RegisterCommand => _registerCommand ?? ( _registerCommand = new RelayCommand(arg => SignupAsync()));
         public ICommand SwitchWindowCommand => _switchWindowCommand ?? (_switchWindowCommand = new RelayCommand(arg => SwitchWindow()));
         public ICommand SwitchRegisterCommand => _switchRegisterCommand ?? (_switchRegisterCommand = new RelayCommand(arg => SwitchRegister()));
         public ICommand IsEqualCommand => _isEqual ?? (_isEqual = new RelayCommand(arg => IsEqual()));
@@ -78,7 +83,7 @@ namespace MyWPFApp
             set
             {
                 _newPassword = value;
-                OnPropertyChanged("PasswordStroke");
+                OnPropertyChanged("NewPasswordStroke");
             }
         }
         public string IsNewPasswordStroke
@@ -87,7 +92,7 @@ namespace MyWPFApp
             set
             {
                 _isNewPassword = value;
-                OnPropertyChanged("PasswordStroke");
+                OnPropertyChanged("IsNewPasswordStroke");
             }
         }
         public TypeUserControl WindowType
@@ -97,6 +102,33 @@ namespace MyWPFApp
             {
                 _windowType = value;
                 OnPropertyChanged(nameof(WindowType));
+            }
+        }
+        public string EmailStroke
+        {
+            get { return _email; }
+            set
+            {
+                _email = value;
+                OnPropertyChanged("EmailStroke");
+            }
+        }
+        public string NameStroke
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                OnPropertyChanged("NameStroke");
+            }
+        }
+        public string SurnameStroke
+        {
+            get { return _surname; }
+            set
+            {
+                _surname = value;
+                OnPropertyChanged("SurnameStroke");
             }
         }
         #endregion
@@ -146,6 +178,20 @@ namespace MyWPFApp
             {
                 DataContent = JsonConvert.DeserializeObject<ObservableCollection<DataInfo>>(a.GetData(content));
                 SwitchWindow();
+            }
+        }
+        private void SignupAsync()
+        {
+            HttpMethods a = new HttpMethods();
+            var content = a.Register(NameStroke,SurnameStroke,EmailStroke,LoginStroke,PasswordStroke);
+            if(content== "Done")
+            {
+                MessageBox.Show("Done");
+                SwitchRegister();
+            }
+            else
+            {
+                MessageBox.Show(content);
             }
         }
         private void IsEqual()

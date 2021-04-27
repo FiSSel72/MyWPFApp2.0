@@ -64,6 +64,29 @@ namespace MyWPFApp
 
             return content;
         }
+        public string Register(string firstname, string secondname, string mail, string username,string pass )
+        {
+            var client = new RestClient(" http://bmhmh.ho.ua");
+            var request = new RestRequest("/index.php/api/NewUser", Method.POST);
+
+            request.AddJsonBody(JsonConvert.SerializeObject(
+                   new
+                   {
+                       login = username,
+                       password = pass,
+                       email = mail,
+                       name = firstname,
+                       surname = secondname
+
+                   }));
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+            if (content== "{\"response\":\"This login already exists!\"}")
+            {
+                return "This login already exists!";
+            }
+            return "Done";
+        }
         public void PostingChange(string log, string pass, string pass2)
         {
             var client = new RestClient(" http://bmhmh.ho.ua");

@@ -16,6 +16,7 @@ namespace MyWPFApp
         #region Fields
         private ICommand _loginCommand;
         private ICommand _switchWindowCommand;
+        private ICommand _switchRegisterCommand;
         private ICommand _isEqual;
         private TypeUserControl _windowType;
         private ObservableCollection<DataInfo> _datacontent;
@@ -29,6 +30,7 @@ namespace MyWPFApp
         #region Commands
         public ICommand LoginCommand => _loginCommand ?? (_loginCommand = new RelayCommand(arg => SigninAsync()));
         public ICommand SwitchWindowCommand => _switchWindowCommand ?? (_switchWindowCommand = new RelayCommand(arg => SwitchWindow()));
+        public ICommand SwitchRegisterCommand => _switchRegisterCommand ?? (_switchRegisterCommand = new RelayCommand(arg => SwitchRegister()));
         public ICommand IsEqualCommand => _isEqual ?? (_isEqual = new RelayCommand(arg => IsEqual()));
         #endregion
 
@@ -168,15 +170,28 @@ namespace MyWPFApp
         {
             if (WindowType == TypeUserControl.Second)
             {
-                UserEnter();
+                UserExit();
                 WindowType = TypeUserControl.First;
                 
             }
             else
             { 
-                UserExit();
-                ++WindowType;
+                UserEnter();
+                WindowType=TypeUserControl.Second;
                 
+            }
+        }
+        private void SwitchRegister()
+        {
+            if (WindowType == TypeUserControl.Third)
+            {
+                WindowType = TypeUserControl.First;
+
+            }
+            else
+            {
+                WindowType = TypeUserControl.Third;
+
             }
         }
         #endregion

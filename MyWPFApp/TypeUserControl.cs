@@ -10,5 +10,6 @@ namespace MyWPFApp
     {
         First,
         Second,
+        Third,
     }
 }

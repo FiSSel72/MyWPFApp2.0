@@ -26,7 +26,10 @@
         <Grid Visibility="{Binding WindowType, Converter={StaticResource EqualsToVisibleConverter}, ConverterParameter={x:Static local:TypeUserControl.Second}}">
             <controls:UserControl2 DataContext="{Binding}"/>
         </Grid>
-       
+        
+        <Grid Visibility="{Binding WindowType, Converter={StaticResource EqualsToVisibleConverter}, ConverterParameter={x:Static local:TypeUserControl.Third}}">
+            <controls:UserControl3 DataContext="{Binding}"/>
+        </Grid>
     </Grid>
 
 </Window>

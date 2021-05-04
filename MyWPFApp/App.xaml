@@ -3,7 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:MyWPFApp"
              StartupUri="MainWindow.xaml">
-    <Application.Resources>
-         
+    <Application.Resources >
+        <ControlTemplate x:Key="errorTemplate">
+            <StackPanel>
+                <AdornedElementPlaceholder x:Name="textBox"/>
+                <TextBlock Text="{Binding [0].ErrorContent}"
+                                               Foreground="White"
+                                               FontWeight="Light"
+                                               FontFamily="Helvetica"/>
+            </StackPanel>
+        </ControlTemplate>
     </Application.Resources>
 </Application>

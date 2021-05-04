@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MyWPFApp.PageAssets" xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:local="clr-namespace:MyWPFApp.PageAssets" xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:local1="clr-namespace:MyWPFApp"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="800">
     <UserControl.Resources>
@@ -57,8 +57,13 @@
                              HorizontalContentAlignment="Left"
                              Opacity="0.5"
                              Height="25"
-                             Text="{Binding Path=NameStroke, Mode=TwoWay}"
-                             />
+                             Validation.ErrorTemplate="{StaticResource ResourceKey=errorTemplate}"
+                             ToolTip="{Binding ErrorCollection[NameStroke]}">
+                        <TextBox.Text>
+                            <Binding Path="NameStroke" ValidatesOnDataErrors="True" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" >
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                     <iconPacks:PackIconMaterial Kind="CardText" 
                                                 VerticalAlignment="Center" 
                                                 HorizontalAlignment="Center" 
@@ -89,8 +94,9 @@
                              HorizontalContentAlignment="Left"
                              Opacity="0.5"
                              Height="25"
-                             Text="{Binding Path=SurnameStroke, Mode=TwoWay}"
-                             />
+                             Validation.ErrorTemplate="{StaticResource ResourceKey=errorTemplate}"
+                             Text="{Binding Path=SurnameStroke, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                             ToolTip="{Binding ErrorCollection[SurnameStroke]}"/>
                     <iconPacks:PackIconMaterial Kind="CardText" 
                                                 VerticalAlignment="Center" 
                                                 HorizontalAlignment="Center" 
@@ -119,7 +125,8 @@
                              HorizontalContentAlignment="Left"
                              Opacity="0.5"
                              Height="25"
-                             Text="{Binding Path=EmailStroke, Mode=TwoWay}"
+                             Validation.ErrorTemplate="{StaticResource ResourceKey=errorTemplate}"
+                             Text="{Binding Path=EmailStroke, Mode=TwoWay, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
                              />
                     <iconPacks:PackIconMaterial Kind="Email" 
                                                 VerticalAlignment="Center" 
@@ -149,7 +156,8 @@
                              HorizontalContentAlignment="Left"
                              Opacity="0.5"
                              Height="25"
-                             Text="{Binding Path=LoginStroke, Mode=TwoWay}"
+                             Validation.ErrorTemplate="{StaticResource ResourceKey=errorTemplate}"
+                             Text="{Binding Path=LoginStroke, Mode=TwoWay, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
                              />
                     <iconPacks:PackIconMaterial Kind="Account" 
                                                 VerticalAlignment="Center" 
@@ -180,7 +188,8 @@
                              Opacity="0.5"
                              Height="25"
                              PasswordChanged="PasswordToTag"
-                             Tag="{Binding Path=PasswordStroke, Mode=OneWayToSource}"
+                             Validation.ErrorTemplate="{StaticResource ResourceKey=errorTemplate}"
+                             Tag="{Binding Path=PasswordStroke, Mode=OneWayToSource, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
                              />
                     <iconPacks:PackIconMaterial Kind="Key" 
                                                 VerticalAlignment="Center" 
@@ -197,7 +206,8 @@
                             Content="SIGN UP" 
                             Margin="60,0,60,0"
                             FontSize="18"
-                            Command="{Binding RegisterCommand}"/>
+                            Command="{Binding RegisterCommand}"
+                            IsEnabled="{Binding IsNoErrors}"/>
                     <Button Width="100" Height="40" 
                             Content="BACK"
                             FontSize="18"

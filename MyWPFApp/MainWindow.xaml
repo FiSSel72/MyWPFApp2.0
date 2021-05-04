@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MyWPFApp" xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:controls="clr-namespace:MyWPFApp.PageAssets"
+        xmlns:local="clr-namespace:MyWPFApp" xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+        xmlns:controls="clr-namespace:MyWPFApp.PageAssets"
         mc:Ignorable="d"
        Title="MainWindow" Height="400" Width="800"
         AllowsTransparency="True" Background="Transparent"
         WindowStyle="None" ResizeMode="NoResize"
         MouseDown="Window_MouseDown"
         WindowStartupLocation="CenterScreen">
-    
     <Window.DataContext>
         <local:ViewModel/>
     </Window.DataContext>

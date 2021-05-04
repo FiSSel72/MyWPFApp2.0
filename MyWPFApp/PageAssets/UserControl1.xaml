@@ -54,8 +54,10 @@
                              Height="25"
                              Margin="63,0,0,0"
                              Text="{Binding Path=LoginStroke, Mode=TwoWay}"
-                             />
-                    <iconPacks:PackIconMaterial Kind="Account" 
+                             >
+                        
+                        </TextBox>
+                        <iconPacks:PackIconMaterial Kind="Account" 
                                                 VerticalAlignment="Center" 
                                                 HorizontalAlignment="Center" 
                                                 Foreground="White"/>
@@ -82,7 +84,7 @@
                              Margin="63,0,0,0"
                              PasswordChanged="PasswordToTag" 
                              Tag="{Binding Path=PasswordStroke, Mode=OneWayToSource}"
-                             />
+                              />
                     <iconPacks:PackIconMaterial Kind="Lock" 
                                                 VerticalAlignment="Center" 
                                                 HorizontalAlignment="Center" 

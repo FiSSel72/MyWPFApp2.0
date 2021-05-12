@@ -18,7 +18,7 @@ namespace MyWPFApp
 {
     class ViewModel : ViewModelBase, IDataErrorInfo
     {
-        
+
         #region Fields
         private ICommand _loginCommand;
         private ICommand _registerCommand;
@@ -33,7 +33,8 @@ namespace MyWPFApp
         public string _email;
         public string _name;
         public string _surname;
-        public bool _isNoErrors;
+       // public bool _isNoErrors;
+        public bool _isNewPassEqual;
         public string _newPassword;
         public string _isNewPassword;
         public Regex regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
@@ -44,7 +45,7 @@ namespace MyWPFApp
 
         #region Commands
         public ICommand LoginCommand => _loginCommand ?? (_loginCommand = new RelayCommand(arg => SigninAsync()));
-        public ICommand RegisterCommand => _registerCommand ?? ( _registerCommand = new RelayCommand(arg => SignupAsync()));
+        public ICommand RegisterCommand => _registerCommand ?? (_registerCommand = new RelayCommand(arg => SignupAsync()));
         public ICommand SwitchWindowCommand => _switchWindowCommand ?? (_switchWindowCommand = new RelayCommand(arg => SwitchWindow()));
         public ICommand SwitchRegisterCommand => _switchRegisterCommand ?? (_switchRegisterCommand = new RelayCommand(arg => SwitchRegister()));
         public ICommand IsEqualCommand => _isEqual ?? (_isEqual = new RelayCommand(arg => IsEqual()));
@@ -54,8 +55,8 @@ namespace MyWPFApp
         public ObservableCollection<DataInfo> DataContent
         {
             get { return _datacontent; }
-            set 
-            { 
+            set
+            {
                 _datacontent = value;
                 OnPropertyChanged(nameof(DataContent));
             }
@@ -141,8 +142,40 @@ namespace MyWPFApp
             get { return _newPassword; }
             set
             {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    _newPassword = value;
+                    OnPropertyChanged(nameof(NewPasswordStroke));
+                    OnPropertyChanged(nameof(IsNewPassEqual));
+                    throw new ArgumentException("New Password cannot be empty.(Exception)");
+                }
+                else if (_hasMinimum.IsMatch(value) == false)
+                {
+                    _newPassword = value;
+                    OnPropertyChanged(nameof(NewPasswordStroke));
+                    OnPropertyChanged(nameof(IsNewPassEqual));
+                    throw new ArgumentException("New Password must contain at least 8 characters.(Exception)");
+                }
+                else if (_hasNumber.IsMatch(value) == false)
+                {
+                    _newPassword = value;
+                    OnPropertyChanged(nameof(NewPasswordStroke));
+                    OnPropertyChanged(nameof(IsNewPassEqual));
+                    throw new ArgumentException("New Password must contain at least one number.(Exception)");
+                }
+                else if (_hasUpperChar.IsMatch(value) == false)
+                {
+                    _newPassword = value;
+                    OnPropertyChanged(nameof(NewPasswordStroke));
+                    OnPropertyChanged(nameof(IsNewPassEqual));
+                    throw new ArgumentException("New Password must contain at least one upper character.(Exception)");
+                }
+                    
                 _newPassword = value;
-                OnPropertyChanged("NewPasswordStroke");
+                OnPropertyChanged(nameof(NewPasswordStroke));
+                OnPropertyChanged(nameof(IsNewPassEqual));
+                
+
             }
         }
         public string IsNewPasswordStroke
@@ -152,6 +185,7 @@ namespace MyWPFApp
             {
                 _isNewPassword = value;
                 OnPropertyChanged("IsNewPasswordStroke");
+                OnPropertyChanged(nameof(IsNewPassEqual));
             }
         }
         public TypeUserControl WindowType
@@ -234,14 +268,35 @@ namespace MyWPFApp
                     OnPropertyChanged(nameof(IsNoErrors));
                     throw new ArgumentException("Surname may contain at least 5 characters.(Exception)");
                 }
-                else 
-                { 
+                else
+                {
                     _surname = value;
                     OnPropertyChanged("SurnameStroke");
                 }
             }
         }
         public bool IsNoErrors => ErrorCollection.All(error => string.IsNullOrWhiteSpace(error.Value));
+        public bool IsNewPassEqual
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(NewPasswordStroke) == true)
+                {
+                    _isNewPassEqual = false;
+                }
+                else if (_hasMinimum.IsMatch(NewPasswordStroke) & _hasNumber.IsMatch(NewPasswordStroke) & _hasUpperChar.IsMatch(NewPasswordStroke) & String.Equals(NewPasswordStroke, IsNewPasswordStroke) & String.Equals(PasswordStroke, NewPasswordStroke) == false)
+                {
+                    _isNewPassEqual = true;
+                }
+                else
+                {
+                    _isNewPassEqual = false;
+                }
+                
+                return _isNewPassEqual;
+            }
+            set{}
+        }
 
         public string Error { get { return null; } }
         public Dictionary<string, string> ErrorCollection { get; set; } = new Dictionary<string, string>();
@@ -249,81 +304,83 @@ namespace MyWPFApp
         {
             get
             {
-                string result = null;
-                switch (name)
-                {
-                    case "NameStroke":
-                        if (string.IsNullOrWhiteSpace(NameStroke) == true)
-                        {
-                            result = "NameStroke cannot be empty";
-                        }
-                        else if (NameStroke.Length < 3)
-                        {
-                            result = "NameStroke must be a minimum of 3 characters.";
-                        }
-                        break;
-                    case "SurnameStroke":
-                        if (string.IsNullOrWhiteSpace(SurnameStroke) == true)
-                        { 
-                            result = "SurnameStroke cannot be empty";
-                        }
-                        else if (SurnameStroke.Length < 4)
-                        { 
-                            result = "SurnameStroke must be a minimum of 4 characters.";
-                        }
-                        break;
-                    case "EmailStroke":
-                        if (string.IsNullOrWhiteSpace(EmailStroke))
-                        {
-                            result = "EmailStroke cannot be empty";
-                        }
-                        else if (regex.IsMatch(EmailStroke) == false)
-                        {
-                            result = "EmailStroke must be an email";
-                        }
-                        break;
-                    case "PasswordStroke":
-                        if (string.IsNullOrWhiteSpace(PasswordStroke))
-                        {
-                            result = "PasswordStroke cannot be empty";
-                        }
-                        else if (_hasMinimum.IsMatch(PasswordStroke) == false)
-                        {
-                            result = "PasswordStroke must contain at least 8 characters";
-                        }
-                        else if (_hasNumber.IsMatch(PasswordStroke) == false)
-                        {
-                            result = "PasswordStroke must contain at least one number";
-                        }
-                        else if (_hasUpperChar.IsMatch(PasswordStroke)==false)
-                        {
-                            result = "PasswordStroke must contain at least one upper character";
-                        }
-                        break;
-                    case "LoginStroke":
-                        if (string.IsNullOrWhiteSpace(LoginStroke))
-                        {
-                            result = "LoginStroke cannot be empty";
-                        }
-                        else if (LoginStroke.Length<5)
-                        {
-                            result = "LoginStroke must be a minimum of 5 characters.";
-                        }
-                        break;
-                        
-                }
+                 string result = null;
+                 switch (name)
+                 {
+                     case "NameStroke":
+                         if (string.IsNullOrWhiteSpace(NameStroke) == true)
+                         {
+                             result = "NameStroke cannot be empty";
+                         }
+                         else if (NameStroke.Length < 3)
+                         {
+                             result = "NameStroke must be a minimum of 3 characters.";
+                         }
+                         break;
+                     case "SurnameStroke":
+                         if (string.IsNullOrWhiteSpace(SurnameStroke) == true)
+                         { 
+                             result = "SurnameStroke cannot be empty";
+                         }
+                         else if (SurnameStroke.Length < 4)
+                         { 
+                             result = "SurnameStroke must be a minimum of 4 characters.";
+                         }
+                         break;
+                     case "EmailStroke":
+                         if (string.IsNullOrWhiteSpace(EmailStroke))
+                         {
+                             result = "EmailStroke cannot be empty";
+                         }
+                         else if (regex.IsMatch(EmailStroke) == false)
+                         {
+                             result = "EmailStroke must be an email";
+                         }
+                         break;
+                     case "PasswordStroke":
+                         if (string.IsNullOrWhiteSpace(PasswordStroke))
+                         {
+                             result = "PasswordStroke cannot be empty";
+                         }
+                         else if (_hasMinimum.IsMatch(PasswordStroke) == false)
+                         {
+                             result = "PasswordStroke must contain at least 8 characters";
+                         }
+                         else if (_hasNumber.IsMatch(PasswordStroke) == false)
+                         {
+                             result = "PasswordStroke must contain at least one number";
+                         }
+                         else if (_hasUpperChar.IsMatch(PasswordStroke)==false)
+                         {
+                             result = "PasswordStroke must contain at least one upper character";
+                         }
+                         break;
+                     case "LoginStroke":
+                         if (string.IsNullOrWhiteSpace(LoginStroke))
+                         {
+                             result = "LoginStroke cannot be empty";
+                         }
+                         else if (LoginStroke.Length<5)
+                         {
+                             result = "LoginStroke must be a minimum of 5 characters.";
+                         }
+                         break;
+                  
 
-               ErrorCollection[name] = result;
-               OnPropertyChanged(nameof(ErrorCollection));
-               OnPropertyChanged(nameof(IsNoErrors));
-               return result;
+                 }
+
+                ErrorCollection[name] = result;
+                OnPropertyChanged(nameof(ErrorCollection));
+                OnPropertyChanged(nameof(IsNoErrors));
+                return result;
             }
             set {}
-        }
-        #endregion
+         }
+        
+                #endregion
 
-        #region Private Methods
-        private void UserEnter()
+                #region Private Methods
+                private void UserEnter()
         {
             using(UserEventsListContext db =new UserEventsListContext())
             {
@@ -383,15 +440,17 @@ namespace MyWPFApp
                 MessageBox.Show(content);
             }
         }
-        private void IsEqual()
+        private bool IsEqual()
         {
             if (PasswordStroke == NewPasswordStroke)
             {
                 MessageBox.Show("New password must have diferences with old password");
+                return false;
             }
             else if (NewPasswordStroke != IsNewPasswordStroke)
             {
                 MessageBox.Show("Password and repeated password have diferences");
+                return false;
             }
             else
             {
@@ -399,6 +458,7 @@ namespace MyWPFApp
                 c.PostingChange(LoginStroke,PasswordStroke,NewPasswordStroke);
                 PasswordStroke = NewPasswordStroke;
                 UserChangedPass();
+                return true;
             }
         }
         private void SwitchWindow()

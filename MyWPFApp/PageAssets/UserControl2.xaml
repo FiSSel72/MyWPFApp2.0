@@ -341,7 +341,8 @@
                             Height="42"
                              Width="200"
                              Background="Transparent"
-                             Text="{Binding Path=NewPasswordStroke, Mode=TwoWay}"
+                             Validation.ErrorTemplate="{StaticResource ResourceKey=errorTemplate}"
+                             Text="{Binding Path=NewPasswordStroke, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                              Foreground="White"
                              IsReadOnly="False"
                              FontFamily="Helvetica" 
@@ -362,7 +363,8 @@
                         <TextBox Height="42"
                              Width="200"
                              Background="Transparent"
-                             Text="{Binding Path=IsNewPasswordStroke, Mode=TwoWay}"
+                             Validation.ErrorTemplate="{StaticResource ResourceKey=errorTemplate}"
+                             Text="{Binding Path=IsNewPasswordStroke, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
                              Foreground="White"
                              IsReadOnly="False"
                              FontFamily="Helvetica" 
@@ -371,7 +373,8 @@
                              HorizontalAlignment="Center"
                              BorderBrush="White"/>
                     </StackPanel>
-                    <Button Content="Save"
+                    <Button x:Name="SaveButton"
+                            Content="Save"
                             Height="40" Width="200"
                             FontSize="28"
                             FontWeight="Light"
@@ -379,7 +382,8 @@
                             HorizontalAlignment="Right"
                             BorderBrush="White"
                             Margin="0 0 3 0"
-                            Command="{Binding Path=IsEqualCommand}"/>
+                            Command="{Binding Path=IsEqualCommand}"
+                            IsEnabled="{Binding IsNewPassEqual}"/>
                 </StackPanel>
 
 

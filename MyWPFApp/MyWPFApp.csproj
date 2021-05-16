@@ -178,6 +178,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CurrentToken.cs" />
+    <Compile Include="DataCryptography.cs" />
     <Compile Include="DataInfo.cs" />
     <Compile Include="EqualsToVisibleConverter.cs" />
     <Compile Include="HttpMethods.cs" />

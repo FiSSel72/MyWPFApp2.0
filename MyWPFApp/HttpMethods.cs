@@ -24,8 +24,8 @@ namespace MyWPFApp
             request.AddJsonBody(JsonConvert.SerializeObject(
                    new
                    {
-                       login = log,
-                       password = pass
+                       login = DataCryptography.EncryptString(log, DataCryptography.key, DataCryptography.iv),
+                       password = DataCryptography.EncryptString(pass, DataCryptography.key, DataCryptography.iv)
                    }));
 
             IRestResponse response = client.Execute(request);
@@ -34,13 +34,15 @@ namespace MyWPFApp
             if (numericStatusCode == 200)
             {        
                 var content = response.Content;
-                if (content == "{\"response\":\"Wrong login" + @"\" + "/password!\"}")
+                if (content == "{\"response\":\"Wrong login" + "/password!\"}")
                 {
                     return "Wrong pass";
                 }
                 else
                 {
                     TokenController._token = JsonConvert.DeserializeObject<CurrentToken>(content);
+                    TokenController._token.token = DataCryptography.DecryptString(TokenController._token.token, DataCryptography.key, DataCryptography.iv);
+
                     return TokenController.GetInstance().token;
                 }
             }
@@ -57,7 +59,7 @@ namespace MyWPFApp
             request.AddJsonBody(JsonConvert.SerializeObject(
                    new
                    {
-                       token = _t
+                       token = DataCryptography.EncryptString(_t, DataCryptography.key, DataCryptography.iv)
                    }));
             IRestResponse response = client.Execute(request);
             var content = response.Content;
@@ -72,11 +74,11 @@ namespace MyWPFApp
             request.AddJsonBody(JsonConvert.SerializeObject(
                    new
                    {
-                       login = username,
-                       password = pass,
-                       email = mail,
-                       name = firstname,
-                       surname = secondname
+                       login = DataCryptography.EncryptString(username, DataCryptography.key, DataCryptography.iv),
+                       password = DataCryptography.EncryptString(pass, DataCryptography.key, DataCryptography.iv),
+                       email = DataCryptography.EncryptString(mail, DataCryptography.key, DataCryptography.iv),
+                       name = DataCryptography.EncryptString(firstname, DataCryptography.key, DataCryptography.iv),
+                       surname = DataCryptography.EncryptString(secondname, DataCryptography.key, DataCryptography.iv)
 
                    }));
             IRestResponse response = client.Execute(request);
@@ -95,13 +97,14 @@ namespace MyWPFApp
             request.AddJsonBody(JsonConvert.SerializeObject(
                    new
                    {
-                       login = log,
-                       password = pass,
-                       password2= pass2
+                       login = DataCryptography.EncryptString(log, DataCryptography.key, DataCryptography.iv),
+                       password = DataCryptography.EncryptString(pass, DataCryptography.key, DataCryptography.iv),
+                       password2 = DataCryptography.EncryptString(pass2, DataCryptography.key, DataCryptography.iv)
                    }));
 
             IRestResponse response = client.Execute(request);
-            MessageBox.Show("Password changed");
+            var result= response.Content;
+            MessageBox.Show(result);
 
         }
 
